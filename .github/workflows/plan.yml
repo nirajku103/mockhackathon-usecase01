@@ -1,0 +1,46 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: GitHubActions
+          aws-region: us-east-1
+
+      - name: Initialize Terraform
+        run: |
+          cd terraform
+          terraform init
+
+      - name: Apply Terraform Changes
+        run: |
+          cd terraform
+          terraform plan -var-file="prod.tfvars"
+          terraform destroy -var-file="prod.tfvars" -auto-approve
+
+         # terraform plan -var-file="prod.tfvars"
+         # terraform show module.ec2.aws_instance.web[0]
+         # terraform apply -var-file="prod.tfvars" -auto-approve
