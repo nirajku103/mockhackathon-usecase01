@@ -47,7 +47,9 @@ jobs:
         run: |
           cd terraform
           terraform plan -var-file="prod.tfvars"
-          terraform destroy -var-file="prod.tfvars" -auto-approve
+          terraform apply -var-file="prod.tfvars" -auto-approve
+
+        # terraform destroy -var-file="prod.tfvars" -auto-approve
 
 
          #terraform apply -var-file="prod.tfvars" -auto-approve
