@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket         = "mock-hackathon-uc01"
-    key            = "terraform/"
+    key            = "terraform"
     region         = "eu-north-1"
     encrypt        = true
   }
