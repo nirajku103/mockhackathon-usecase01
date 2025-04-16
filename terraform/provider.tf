@@ -1,13 +1,12 @@
 terraform {
   backend "s3" {
-    bucket         = "your-terraform-state-bucket-u2"
+    bucket         = "mock-hackathon-uc01"
     key            = "terraform/statefile.tfstate"
-    region         = "us-east-1"
-  #  dynamodb_table = "terraform-lock"
+    region         = "eu-north-1"
     encrypt        = true
   }
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "eu-north-1"
 }
